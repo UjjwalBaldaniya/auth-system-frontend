@@ -20,14 +20,14 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <header className="w-full bg-white shadow-sm px-6 py-4 flex justify-between items-center">
-        <h1 className="text-xl font-semibold text-gray-800">MyApp</h1>
+        <h1 className="text-xl font-semibold text-gray-800">My Lync</h1>
 
-        <button
+        <Button
           onClick={handleLogout}
-          className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+          className="!w-auto px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
         >
           Logout
-        </button>
+        </Button>
       </header>
 
       <main className="flex-1 flex items-center justify-center px-4">

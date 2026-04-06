@@ -12,7 +12,7 @@ export default function AuthTabs() {
     <div className="flex bg-white border border-gray-300 rounded-full p-2 mb-6">
       <button
         onClick={() => router.push("/signin")}
-        className={`w-1/2 py-3 rounded-full text-sm font-medium transition ${
+        className={`w-1/2 py-3 rounded-full text-sm font-medium transition cursor-pointer ${
           isSignin ? "bg-blue-500 text-white" : "text-gray-500"
         }`}
       >
@@ -21,7 +21,7 @@ export default function AuthTabs() {
 
       <button
         onClick={() => router.push("/signup")}
-        className={`w-1/2 py-3 rounded-full text-sm font-medium transition ${
+        className={`w-1/2 py-3 rounded-full text-sm font-medium transition cursor-pointer ${
           !isSignin ? "bg-blue-500 text-white" : "text-gray-500"
         }`}
       >
