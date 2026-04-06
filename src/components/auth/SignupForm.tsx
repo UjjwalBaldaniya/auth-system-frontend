@@ -5,9 +5,10 @@ import { Button } from "@/shared/Button";
 import Input from "@/shared/Input";
 import { signUpSchema } from "@/validation/auth.schema";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { toast } from "react-toastify/unstyled";
+import { toast } from "react-toastify";
 import { z } from "zod";
 import AuthLayout from "./AuthLayout";
 import AuthTabs from "./AuthTabs";
@@ -33,15 +34,20 @@ const SignupForm = () => {
     },
   });
 
+  const router = useRouter();
+
   const onSubmit = async (data: FormData) => {
     try {
       setLoading(true);
+      const payload = {
+        username: data.name,
+        email: data.email,
+        password: data.password,
+      };
+      await signupUser(payload);
 
-      await signupUser(data);
-
-      toast.success("Account created successfully 🚀");
-
-      // router.push("/signin");
+      toast.success("Account created successfully");
+      router.push("/signin");
     } catch (error: unknown) {
       const err = error as { response?: { data?: { message?: string } } };
       const message = err?.response?.data?.message || "Signup failed";
@@ -68,7 +74,7 @@ const SignupForm = () => {
       <AuthTabs />
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <h2 className="text-3xl font-semibold text-center mb-2">
+        <h2 className="text-3xl font-semibold text-black text-center mb-2">
           Create account
         </h2>
 
@@ -93,7 +99,14 @@ const SignupForm = () => {
             type="submit"
             className="!w-40 bg-blue-500 text-white hover:bg-blue-600"
           >
-            {loading ? "Please wait..." : "Sign up"}
+            {loading ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                Processing...
+              </>
+            ) : (
+              "Sign up"
+            )}
           </Button>
         </div>
 

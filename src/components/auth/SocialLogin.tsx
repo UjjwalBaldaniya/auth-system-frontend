@@ -10,7 +10,6 @@ export default function SocialButtons() {
       <Button
         icon={<FcGoogle size={20} />}
         className="bg-white text-black hover:bg-gray-100"
-        onClick={() => console.log("Google login")}
       >
         Continue with Google
       </Button>
@@ -18,7 +17,6 @@ export default function SocialButtons() {
       <Button
         icon={<FaApple size={20} />}
         className="bg-black text-white hover:bg-gray-800"
-        onClick={() => console.log("Apple login")}
       >
         Continue with Apple
       </Button>

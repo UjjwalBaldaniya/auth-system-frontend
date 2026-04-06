@@ -1,6 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -9,7 +10,7 @@ import { Button } from "@/shared/Button";
 import Input from "@/shared/Input";
 import { signInSchema } from "@/validation/auth.schema";
 import { useState } from "react";
-import { toast } from "react-toastify/unstyled";
+import { toast } from "react-toastify";
 import AuthLayout from "./AuthLayout";
 import AuthTabs from "./AuthTabs";
 import SocialLogin from "./SocialLogin";
@@ -33,19 +34,25 @@ const SigninForm = () => {
     },
   });
 
+  const router = useRouter();
+
   const onSubmit = async (data: FormData) => {
     try {
       setLoading(true);
 
       const res = await signinUser(data);
-      toast.success("SignIn successful");
-      if (res?.accessToken) {
-        localStorage.setItem("accessToken", res.accessToken);
+      toast.success("Sign in successful");
+
+      if (res?.data?.accessToken) {
+        document.cookie = `accessToken=${res.data.accessToken}; path=/; max-age=86400`;
+      } else {
+        throw new Error("Token not received");
       }
-      // router.push("/dashboard");
+
+      router.push("/");
     } catch (error: unknown) {
       const err = error as { response?: { data?: { message?: string } } };
-      const message = err?.response?.data?.message || "SignIn failed";
+      const message = err?.response?.data?.message || "Sign in failed";
 
       toast.error(message);
     } finally {
@@ -97,7 +104,14 @@ const SigninForm = () => {
             type="submit"
             className="!w-40 bg-blue-500 text-white hover:bg-blue-600"
           >
-            {loading ? "Please wait..." : "Sign in"}
+            {loading ? (
+              <>
+                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+                Processing...
+              </>
+            ) : (
+              "Sign in"
+            )}
           </Button>
         </div>
 
