@@ -102,16 +102,11 @@ const SigninForm = () => {
         <div className="flex justify-center mb-8">
           <Button
             type="submit"
-            className="!w-40 bg-blue-500 text-white hover:bg-blue-600"
+            loading={loading}
+            loadingText="Signing in..."
+            className="!w-50 bg-blue-500 text-white hover:bg-blue-600"
           >
-            {loading ? (
-              <>
-                <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
-                Processing...
-              </>
-            ) : (
-              "Sign in"
-            )}
+            Sign in
           </Button>
         </div>
 
